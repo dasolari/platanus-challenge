@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'recursive-open-struct'
-require_relative './pokemon'
+require_relative '../models/pokemon'
 require_relative './pokemon_request'
 
 # Class that generates the needed Pokemon objects for the tournament
@@ -31,9 +30,9 @@ class PokemonGenerator
 
   def create_pokemon
     response = @pokemon_api.get_pokemon(random_pokemon_id)
-    structured_response = RecursiveOpenStruct.new(response, recurse_over_arrays: true)
-    pokemon = Pokemon.new(structured_response.name)
-    pokemon.initialize_stats(structured_response.stats)
+    pokemon = Pokemon.new(response.name)
+    pokemon.initialize_stats(response.stats)
+    pokemon.initialize_types(response.types, @pokemon_api)
     pokemon
   end
 end
