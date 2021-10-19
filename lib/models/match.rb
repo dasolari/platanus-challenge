@@ -13,6 +13,7 @@ class Match
     @pokemon_attacking = nil
     @winner = nil
     @done = false
+    @deadlock_counter = 0
     @view = View.new
     define_who_starts
   end
@@ -28,14 +29,14 @@ class Match
     @view.print_match_started(@match_number, @pokemon1.name, @pokemon2.name)
     loop do
       defender = who_is_defending
-      @pokemon_attacking.strike(defender)
+      status = @pokemon_attacking.strike(defender)
+      deadlock_status(status, defender)
       unless defender.alive
         @winner = @pokemon_attacking
         @done = true
       end
       break if @done
 
-      sleep(0.5)
       switch_turn
     end
     @view.print_match_winner(@match_number, @winner.name)
@@ -53,5 +54,23 @@ class Match
     return @pokemon2 if @pokemon_attacking == @pokemon1
 
     @pokemon1
+  end
+
+  def deadlock_status(status, defender)
+    if status
+      @deadlock_counter = 0
+    else
+      @deadlock_counter += 1
+    end
+    check_if_deadlock_exists(defender)
+  end
+
+  def check_if_deadlock_exists(defender)
+    return unless @deadlock_counter >= 20
+
+    @view.print_deadlock_formed(@pokemon_attacking.name, defender.name)
+    @pokemon_attacking.defense *= 0.75
+    defender.defense *= 0.75
+    @deadlock_counter = 0
   end
 end

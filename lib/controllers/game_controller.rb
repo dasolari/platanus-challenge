@@ -2,7 +2,7 @@
 
 # Class that controls the flow of the game and interacts with the UI
 class GameController
-  attr_accessor :model, :view, :playing
+  attr_accessor :model, :view
 
   def initialize(game_model, game_view)
     @tournament = game_model

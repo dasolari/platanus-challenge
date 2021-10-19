@@ -2,7 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
-    highline (2.0.3)
+    colorize (0.8.1)
     httparty (0.20.0)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
@@ -31,18 +31,21 @@ GEM
       parser (>= 3.0.1.1)
     ruby-progressbar (1.11.0)
     strings-case (0.3.0)
+    terminal-table (3.0.2)
+      unicode-display_width (>= 1.1.1, < 3)
     unicode-display_width (2.1.0)
 
 PLATFORMS
   x86_64-darwin-20
 
 DEPENDENCIES
-  highline
+  colorize
   httparty
   rake
   recursive-open-struct
   rubocop
   strings-case
+  terminal-table
 
 BUNDLED WITH
    2.2.27

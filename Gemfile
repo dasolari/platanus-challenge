@@ -2,6 +2,7 @@
 
 source 'https://rubygems.org'
 
+gem 'colorize'
 gem 'httparty'
 gem 'rake'
 gem 'recursive-open-struct'

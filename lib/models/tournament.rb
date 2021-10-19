@@ -52,8 +52,6 @@ class Tournament
   end
 
   def reset_remaining_pokemons
-    @current_stage_pokemons.each do |pokemon|
-      pokemon.reset
-    end
+    @current_stage_pokemons.each(&:reset)
   end
 end

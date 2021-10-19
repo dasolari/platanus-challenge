@@ -9,8 +9,8 @@ require_relative '../views/game_view'
 
 # Class that represents a pokemon object
 class Pokemon
-  attr_accessor :hp
-  attr_reader :name, :attack, :defense, :special_attack, :special_defense, :speed, :types, :alive, :original_hp
+  attr_accessor :hp, :defense
+  attr_reader :name, :attack, :special_attack, :special_defense, :speed, :types, :alive, :original_hp, :original_defense
 
   def initialize(name)
     @name = name.capitalize
@@ -28,6 +28,7 @@ class Pokemon
       instance_variable_set("@#{name}", value)
     end
     @original_hp = @hp
+    @original_defense = @defense
   end
 
   def initialize_types(types_array, api_object)
@@ -46,11 +47,12 @@ class Pokemon
   def defend(attack_move)
     damage_taken = calculate_damage_taken(attack_move)
     damage_taken <= 0 && @view.print_effective_defense(@name)
-    return unless damage_taken.positive?
+    return false unless damage_taken.positive?
 
     @hp -= damage_taken
     @view.print_defense(@name, attack_move.value, damage_taken, [0, @hp].max)
     check_health
+    true
   end
 
   def choose_attack(opponent)
@@ -60,15 +62,15 @@ class Pokemon
     return Move.new(MoveNature::ATTACK, MoveType::PHISICAL, @attack) unless attack_type == MoveType::SPECIAL
 
     chosen_attack = @types.sample
-    modified_damage = consider_opponent_defense(chosen_attack, opponent.types, @special_attack)
-    @view.print_attack(@name, opponent.name, attack_type, modified_damage, chosen_attack.name)
-    Move.new(MoveNature::ATTACK, MoveType::SPECIAL, modified_damage, chosen_attack.name)
+    consider_opponent_defense(chosen_attack, attack_type, opponent, @special_attack)
   end
 
-  def consider_opponent_defense(chosen_attack, opponent_types, damage)
-    damage = check_damage_to_stats(chosen_attack.double_damage_to, 2, opponent_types, damage)
-    damage = check_damage_to_stats(chosen_attack.half_damage_to, 0.5, opponent_types, damage)
-    check_damage_to_stats(chosen_attack.no_damage_to, 0, opponent_types, damage)
+  def consider_opponent_defense(chosen_attack, attack_type, opponent, damage)
+    damage = check_damage_to_stats(chosen_attack.double_damage_to, 2, opponent.types, damage)
+    damage = check_damage_to_stats(chosen_attack.half_damage_to, 0.5, opponent.types, damage)
+    damage = check_damage_to_stats(chosen_attack.no_damage_to, 0, opponent.types, damage)
+    @view.print_attack(@name, opponent.name, attack_type, damage, chosen_attack.name)
+    Move.new(MoveNature::ATTACK, MoveType::SPECIAL, damage, chosen_attack.name)
   end
 
   def check_damage_to_stats(damage_stats_array, multiplier, opponent_types, damage)
@@ -102,10 +104,14 @@ class Pokemon
   end
 
   def check_health
-    @alive = false if @hp <= 0
+    return unless @hp <= 0
+
+    @alive = false
+    @view.print_defeated(@name)
   end
 
   def reset
     @hp = @original_hp
+    @defense = @original_defense
   end
 end
