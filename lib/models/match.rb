@@ -68,8 +68,8 @@ class Match
     return unless @deadlock_counter >= 20
 
     @view.print_deadlock_formed(@pokemon_attacking.name, defender.name)
-    @pokemon_attacking.defense *= 0.75
-    defender.defense *= 0.75
+    @pokemon_attacking.defense *= 0.6
+    defender.defense *= 0.6
     @deadlock_counter = 0
   end
 end

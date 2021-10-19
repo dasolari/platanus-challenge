@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'terminal-table'
+require_relative '../inputs'
 require_relative '../helpers/colorizer'
 
 # Singleton class in charge of the user interface and console prints
@@ -76,7 +77,7 @@ class View
   end
 
   def print_deadlock_formed(attacker, defender)
-    display("🔒 Deadlock formed. Reducing #{attacker} and #{defender}'s defense by 25%.", 0.6, false, 2, 'RED')
+    display("🔒 Deadlock formed. Reducing #{attacker} and #{defender}'s defense by 40%.", 0.6, false, 2, 'RED')
   end
 
   def print_tournament_winner(winner)
@@ -90,6 +91,6 @@ class View
   def display(text, sleep_time, line_skip, tab = 0, color = 'WHITE')
     puts '  ' * tab + COLOR[color].call(text)
     line_skip && puts
-    sleep(sleep_time)
+    sleep(sleep_time * GAME_SPEED)
   end
 end

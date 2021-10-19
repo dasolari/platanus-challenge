@@ -15,7 +15,7 @@
 - There is an equal chance of attacking with any one of the Pokemon's own types, but only one is used per attack.
 - When a Pokemon does a special attack, the defender Pokemon does a special defense.
 - Phisical attacks do not get incremented/decremented by any factor given the attacker or defender's type(s), meanwhile, special attacks __do__.
-- There is a small chance that two battling Pokemons enter in a __deadlock__, where none can hurt the other. When this happens, a counter allows up 20 deadlock turns, and if no Pokemon loses `hp`, they both get their `defense` reduced by 25% to keep the odds even and finish the match quicker.
+- There is a small chance that two battling Pokemons enter in a __deadlock__, where none can hurt the other. When this happens, a counter allows up 20 deadlock turns, and if no Pokemon loses `hp`, they both get their `defense` reduced by 40% (for that match only) to keep the odds even and finish the match quicker.
 - For every match, the following attributes where considered for deciding the outcome of the fight:
   - `hp`
   - `attack` (phisical)
@@ -43,7 +43,7 @@ rake
 ```
 
 ### Inputs
-In the `main.rb` file you can change the starting inputs if you want to try running a bigger tournament or selecting from a bigger pool of Pokemons.
+In the `lib/inputs.rb` file you can change the starting inputs if you want to try running a bigger tournament or selecting from a bigger pool of Pokemons. You can also change the game speed (reduce the number to increase game speed).
 
 ### Interface
 There is not really a user interface in this program, everything is shown through console prints. You will know the state of the tournament in every moment thanks to these console prints. To make them more user friendly and easier to distinguish, some statements were given certain colors, here is a list:
