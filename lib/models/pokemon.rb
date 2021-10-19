@@ -18,7 +18,7 @@ class Pokemon
     @special_odds = 1
     @normal_odds = 2
     @alive = true
-    @view = View.new
+    @view = View.instance
   end
 
   def initialize_stats(stats_array)

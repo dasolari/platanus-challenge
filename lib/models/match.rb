@@ -14,7 +14,7 @@ class Match
     @winner = nil
     @done = false
     @deadlock_counter = 0
-    @view = View.new
+    @view = View.instance
     define_who_starts
   end
 

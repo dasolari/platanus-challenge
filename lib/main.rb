@@ -14,7 +14,7 @@ first_n_pokemons = 151
 if validate_number_of_pokemons(number_of_pokemons) && validate_pool_size(first_n_pokemons)
   generator = PokemonGenerator.new(first_n_pokemons, number_of_pokemons)
   tournament = Tournament.new(generator.pokemons)
-  view = View.new
+  view = View.instance
   game_controller = GameController.new(tournament, view)
   game_controller.play
 else

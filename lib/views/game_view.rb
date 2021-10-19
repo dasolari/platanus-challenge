@@ -3,8 +3,16 @@
 require 'terminal-table'
 require_relative '../helpers/colorizer'
 
-# Class that represents the user interface in console
+# Singleton class in charge of the user interface
 class View
+  @instance = new
+
+  private_class_method :new
+
+  def self.instance
+    @instance
+  end
+
   def print_greeting
     display('Hello and welcome to this pokemon tournament', 2, true)
   end

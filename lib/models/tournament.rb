@@ -13,7 +13,7 @@ class Tournament
     @current_match = 1
     @winner = nil
     @done = false
-    @view = View.new
+    @view = View.instance
   end
 
   def start
