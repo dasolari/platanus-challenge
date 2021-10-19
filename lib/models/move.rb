@@ -2,7 +2,7 @@
 
 # Class that represents a move with all its necesary attributes
 class Move
-  attr_reader :nature, :type, :value
+  attr_reader :nature, :type, :value, :chosen_type
 
   def initialize(nature, type, value, chosen_type = nil)
     @nature = nature

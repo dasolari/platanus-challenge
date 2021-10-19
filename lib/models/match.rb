@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../views/game_view'
+
 # Class that represents a match between 2 pokemons
 class Match
   attr_reader :winner
@@ -10,6 +12,8 @@ class Match
     @pokemon2 = pokemon2
     @pokemon_attacking = nil
     @winner = nil
+    @done = false
+    @view = View.new
     define_who_starts
   end
 
@@ -21,14 +25,20 @@ class Match
   end
 
   def play
+    @view.print_match_started(@match_number, @pokemon1.name, @pokemon2.name)
     loop do
       defender = who_is_defending
       @pokemon_attacking.strike(defender)
-      !defender.alive && @winner = @pokemon_attacking
-      break unless @winner.nil?
+      unless defender.alive
+        @winner = @pokemon_attacking
+        @done = true
+      end
+      break if @done
 
+      sleep(0.5)
       switch_turn
     end
+    @view.print_match_winner(@match_number, @winner.name)
   end
 
   def switch_turn

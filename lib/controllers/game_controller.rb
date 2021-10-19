@@ -5,15 +5,14 @@ class GameController
   attr_accessor :model, :view, :playing
 
   def initialize(game_model, game_view)
-    @model = game_model
+    @tournament = game_model
     @view = game_view
-    @playing = true
   end
 
   def play
-    loop do
-      # do something
-      break unless @playing
-    end
+    @view.print_greeting
+    @tournament.start
+    @view.print_tournament_winner(@tournament.winner.name)
+    @view.print_goodbye
   end
 end
