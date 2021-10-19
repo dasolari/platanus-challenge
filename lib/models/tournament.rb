@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
+require_relative '../decorator/match_decorator'
 require_relative '../views/game_view'
 require_relative './match'
 
 # Class that represents a tournament, which is composed of many matches
 class Tournament
-  attr_reader :current_stage_pokemons, :winner
+  attr_reader :current_stage_pokemons, :winner, :view
 
   def initialize(pokemons)
     @current_stage_pokemons = pokemons
@@ -16,8 +17,7 @@ class Tournament
     @view = View.instance
   end
 
-  def start
-    @view.print_players_and_stats(@current_stage_pokemons)
+  def play
     loop do
       play_a_match
       @current_stage_pokemons.empty? && check_if_winner
@@ -28,7 +28,8 @@ class Tournament
   def play_a_match
     pokemon1, pokemon2 = choose_two_pokemons
     match = Match.new(@current_match, pokemon1, pokemon2)
-    match.play
+    match_decorator = MatchDecorator.new(match)
+    match_decorator.play
     @next_stage_pokemons << match.winner
     @current_match += 1
   end

@@ -3,14 +3,14 @@
 require 'terminal-table'
 require_relative '../helpers/colorizer'
 
-# Singleton class in charge of the user interface
+# Singleton class in charge of the user interface and console prints
 class View
   @instance = new
 
   private_class_method :new
 
-  def self.instance
-    @instance
+  class << self
+    attr_reader :instance
   end
 
   def print_greeting
