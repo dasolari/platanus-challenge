@@ -1,3 +1,14 @@
+### Commands
+To install the dependencies, run this command (you should have the latest version of ruby installed):
+```rb
+bundle install
+```
+Once the dependencies are installed, to play the tournament, run the following command:
+
+```rb
+rake
+```
+
 ### Gems Used
 - [colorize](https://github.com/fazibear/colorize) for console printing in colors.
 - [httparty](https://github.com/jnunemaker/httparty) for making http requests.
@@ -30,17 +41,6 @@
 - The console logs and prints where abstracted and separated from the business logic of the program in a pseudo-mvc  architecture.
 - The Singleton design pattern was used for instantiating the same object of the `View` class in every part it was needed.
 - The Decorator design pattern was used for decorating the `play` method with some console prints, present in many classes.
-
-### Commands
-To install the dependencies, run this command (you should have the latest version of ruby installed):
-```rb
-bundle install
-```
-Once the dependencies are installed, to play the tournament, run the following command:
-
-```rb
-rake
-```
 
 ### Inputs
 In the `lib/inputs.rb` file you can change the starting inputs if you want to try running a bigger tournament or selecting from a bigger pool of Pokemons. You can also change the game speed (reduce the number to increase game speed).
